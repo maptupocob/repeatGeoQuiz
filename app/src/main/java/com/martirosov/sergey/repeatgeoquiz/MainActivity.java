@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button trueButton = findViewById(R.id.true_button);
         Button falseButton = findViewById(R.id.false_button);
-        Button prevButton = findViewById(R.id.prev_button);
-        Button nextButton = findViewById(R.id.next_button);
+        ImageButton prevButton = findViewById(R.id.prev_button);
+        ImageButton nextButton = findViewById(R.id.next_button);
         questionText = findViewById(R.id.question_text);
 
         trueButton.setOnClickListener(new View.OnClickListener() {
