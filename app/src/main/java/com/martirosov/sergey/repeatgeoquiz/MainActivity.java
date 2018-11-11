@@ -1,5 +1,6 @@
 package com.martirosov.sergey.repeatgeoquiz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 0;
     TextView questionText;
     LinearLayout answerLL;
+    boolean wasAnswerShown;
 
     Question[] questions = {
             new Question(R.string.question_africa, false),
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(KEY_BUNDLE, 0);
-            answers = (boolean[][])savedInstanceState.getSerializable(ANSWER_KEY);
+            answers = (boolean[][]) savedInstanceState.getSerializable(ANSWER_KEY);
         }
 
         trueButton.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkAnswer(boolean answered) {
+
         boolean isFull = true;
         int resID;
         if (questions[currentIndex].isAnswerTrue() == answered) {
@@ -144,30 +147,48 @@ public class MainActivity extends AppCompatActivity {
         for (boolean[] b : answers) {
             isFull = isFull & b[0];
         }
-        if (isFull){
+        if (isFull) {
             showResult();
         }
         answerLL.setVisibility(View.INVISIBLE);
     }
 
-    private void showResult(){
-        int cor =0;
-        int total =0;
+    private void showResult() {
+        int cor = 0;
+        int total = 0;
         for (int i = 0; i < questions.length; i++) {
-            if(answers[i][0]&answers[i][1]){cor++;}
-            if(answers[i][0]){total++;}
+            if (answers[i][0] & answers[i][1]) {
+                cor++;
+            }
+            if (answers[i][0]) {
+                total++;
+            }
         }
-        int mark = cor * 5/total;
-        Toast.makeText(this,String.format(getString(R.string.result), mark), Toast.LENGTH_SHORT).show();
+        int mark = cor * 5 / total;
+        Toast.makeText(this, String.format(getString(R.string.result), mark), Toast.LENGTH_SHORT).show();
     }
 
     public void updateQuestion(int i) {
+        wasAnswerShown=false;
         currentIndex = (currentIndex + i + 6) % 6;
         questionText.setText(questions[currentIndex].getTextResId());
-        if (!answers[currentIndex][0]){
+        if (!answers[currentIndex][0]) {
             answerLL.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             answerLL.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if ((data != null)&&(resultCode == RESULT_OK)) {
+                wasAnswerShown = CheatActivity.wasAnswerShown(data);
+            } else {
+                return;
+            }
+        }else{
+            return;
         }
     }
 }

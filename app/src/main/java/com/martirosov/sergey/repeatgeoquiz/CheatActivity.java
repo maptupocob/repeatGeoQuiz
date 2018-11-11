@@ -12,7 +12,6 @@ public class CheatActivity extends AppCompatActivity {
     public static final String ANSWER_SHOWN = "ANSWER_SHOWN";
     Button cheatButton;
     TextView answerTextView;
-    boolean isAnswerShown;
 
     public static final String CHEAT_ACTIVITY_KEY = "CHEAT_ACTIVITY_KEY";
 
@@ -28,10 +27,9 @@ public class CheatActivity extends AppCompatActivity {
                 boolean answer = getIntent().getBooleanExtra(CHEAT_ACTIVITY_KEY, false);
                 int resID = (answer)?R.string.true_button:R.string.false_button;
                 answerTextView.setText(resID);
-
+                setAnswerShownResult(true);
             }
         });
-
 
     }
 
@@ -45,5 +43,9 @@ public class CheatActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra(ANSWER_SHOWN, isAnswerShown);
         setResult(RESULT_OK, intent);
+    }
+
+    public static boolean wasAnswerShown(Intent intent){
+        return intent.getBooleanExtra(ANSWER_SHOWN, false);
     }
 }
