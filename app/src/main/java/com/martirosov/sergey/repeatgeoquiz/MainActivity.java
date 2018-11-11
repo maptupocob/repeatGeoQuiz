@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     public static final String KEY_BUNDLE = "CurrentIndex";
     public static final String ANSWER_KEY = "answerKey";
+    public static final int REQUEST_CODE = 0;
     TextView questionText;
     LinearLayout answerLL;
 
@@ -43,11 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Button prevButton = findViewById(R.id.prev_button);
         Button nextButton = findViewById(R.id.next_button);
         questionText = findViewById(R.id.question_text);
-//        for (boolean[] b:answers) {
-//            for (boolean a:b) {
-//                a=false;
-//            }
-//        }
+        Button cheatButton = findViewById(R.id.cheat_button);
 
         if (savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(KEY_BUNDLE, 0);
@@ -79,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateQuestion(1);
+            }
+        });
+
+        cheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(CheatActivity.newIntent(MainActivity.this, questions[currentIndex].isAnswerTrue()), REQUEST_CODE);
             }
         });
         updateQuestion(0);
