@@ -92,23 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart()");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume()");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause()");
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -117,22 +100,13 @@ public class MainActivity extends AppCompatActivity {
         outState.putSerializable(ANSWER_KEY, answers);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop()");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy()");
-    }
-
     public void checkAnswer(boolean answered) {
 
         boolean isFull = true;
         int resID;
+        if(wasAnswerShown){
+            Toast.makeText(this, R.string.cheat_toast, Toast.LENGTH_SHORT).show();
+        }
         if (questions[currentIndex].isAnswerTrue() == answered) {
             resID = R.string.correct;
             answers[currentIndex][1] = true;

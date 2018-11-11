@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class CheatActivity extends AppCompatActivity {
     public static final String ANSWER_SHOWN = "ANSWER_SHOWN";
-    Button cheatButton;
+    Button showAnswerButton;
     TextView answerTextView;
 
     public static final String CHEAT_ACTIVITY_KEY = "CHEAT_ACTIVITY_KEY";
@@ -20,8 +20,8 @@ public class CheatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat);
         answerTextView=findViewById(R.id.answer_text_view);
-        cheatButton = findViewById(R.id.cheat_button);
-        cheatButton.setOnClickListener(new View.OnClickListener() {
+        showAnswerButton = findViewById(R.id.show_answer_button);
+        showAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean answer = getIntent().getBooleanExtra(CHEAT_ACTIVITY_KEY, false);
@@ -30,7 +30,6 @@ public class CheatActivity extends AppCompatActivity {
                 setAnswerShownResult(true);
             }
         });
-
     }
 
     public static Intent newIntent(Context con, boolean isAnswerTrue){
